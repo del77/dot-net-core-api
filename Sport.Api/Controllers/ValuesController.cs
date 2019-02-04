@@ -4,12 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Sport.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        //public ValuesController(IUserService userService)
+        //{
+            
+        //}
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

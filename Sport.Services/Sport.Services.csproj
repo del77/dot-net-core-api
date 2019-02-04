@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sport.Core\Sport.Core.csproj" />
     <ProjectReference Include="..\Sport.Infrastructure\Sport.Infrastructure.csproj" />
   </ItemGroup>
