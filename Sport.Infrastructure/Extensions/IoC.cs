@@ -13,7 +13,7 @@ namespace Sport.Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, MemoryUserRepository>();
+            services.AddScoped<IUserRepository, InMemoryUserRepository>();
             services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
             
             return services;

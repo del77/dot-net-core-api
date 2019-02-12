@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sport.Services.Dto;
 using Sport.Services.Interfaces;
+using Sport.Services.Users.Commands;
 
 namespace Sport.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _userService = userService;
         }
@@ -24,7 +25,7 @@ namespace Sport.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var users = await _userService.GetAllAsync();
-            if (users == null)
+            if (!users.Any())
             {
                 return NotFound();
             }
@@ -41,5 +42,9 @@ namespace Sport.Api.Controllers
             }
             return Ok(user);
         }
+
+
+
+
     }
 }

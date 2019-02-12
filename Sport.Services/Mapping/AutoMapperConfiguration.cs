@@ -11,6 +11,7 @@ namespace Sport.Services.Mapping
             var config = new MapperConfiguration(cfg =>
                 {
                     cfg.CreateMap<User, UserDto>();
+                    cfg.CreateMap<Event, EventDto>();
                 });
             var mapper = config.CreateMapper();
             return mapper;

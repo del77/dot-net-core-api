@@ -9,6 +9,7 @@ namespace Sport.Core.Repositories
     public interface IUserRepository
     {
         Task<User> GetAsync(Guid id);
+        Task<User> GetAsync(string username);
         Task<IEnumerable<User>> GetAllAsync();
         Task AddAsync(User user);
         Task DeleteAsync(Guid id);

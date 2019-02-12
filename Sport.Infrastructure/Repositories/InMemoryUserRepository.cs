@@ -8,7 +8,7 @@ using Sport.Core.Repositories;
 
 namespace Sport.Infrastructure.Repositories
 {
-    public class MemoryUserRepository : IUserRepository
+    public class InMemoryUserRepository : IUserRepository
     {
         private static readonly ISet<User> users = new HashSet<User>
         {
@@ -16,9 +16,16 @@ namespace Sport.Infrastructure.Repositories
             new User(Guid.NewGuid(), "user2", "user2@email.com", "firstName2", "lastName2"),
             new User(Guid.NewGuid(), "user3", "user3@email.com", "firstName3", "lastName3"),
         };
+
         public async Task<User> GetAsync(Guid id)
         {
             var user = await Task.FromResult(users.SingleOrDefault(x => x.Id == id));
+            return user;
+        }
+
+        public async Task<User> GetAsync(string username)
+        {
+            var user = await Task.FromResult(users.SingleOrDefault(x => x.Username == username.ToLowerInvariant()));
             return user;
         }
 

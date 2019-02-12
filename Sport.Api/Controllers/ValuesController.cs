@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sport.Services.Users.Commands;
 
 
 namespace Sport.Api.Controllers
@@ -17,8 +20,10 @@ namespace Sport.Api.Controllers
         //}
         // GET api/values
         [HttpGet]
+        [Authorize]
         public ActionResult<IEnumerable<string>> Get()
         {
+         
             return new string[] { "value1", "value2" };
         }
 
