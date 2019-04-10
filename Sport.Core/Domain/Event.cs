@@ -9,8 +9,8 @@ namespace Sport.Core.Domain
     {
         private ISet<UserEvent> enrolledUsers = new HashSet<UserEvent>();
         public Guid Id { get; private set; }
-        public User Creator { get; private set; }
-        public IEnumerable<UserEvent> EnrolledUsers => enrolledUsers;
+        public virtual User Creator { get; private set; }
+        public virtual IEnumerable<UserEvent> EnrolledUsers => enrolledUsers;
         public Discipline Discipline { get; private set; }
         public string Description { get; private set; }
         public int Slots { get; private set; }
@@ -26,7 +26,7 @@ namespace Sport.Core.Domain
         public string Place { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
-        private Event() { }
+        protected Event() { }
         public Event(Guid id, User creator, Discipline discipline, string description, int slots, double price, DateTime date, TimeSpan approximateDuration, string place)
         {
             Id = id;
@@ -68,7 +68,7 @@ namespace Sport.Core.Domain
 
         public void SetDescription(string description)
         {
-            if (Description.Length > 5000)
+            if (description.Length > 5000)
             {
                 throw new ArgumentException("Description length mustn't be greater than 5000.");
             }
@@ -78,6 +78,10 @@ namespace Sport.Core.Domain
 
         public void JoinUser(User user)
         {
+            if (user == Creator)
+            {
+                throw new Exception("Event creator is not allowed to enroll to it.");
+            }
             if (EnrolledUsersCount + 1 > Slots)
             {
                 throw new Exception("Not enough slots");

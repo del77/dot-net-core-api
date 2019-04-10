@@ -12,5 +12,6 @@ namespace Sport.Services.Interfaces
         Task<IEnumerable<EventDto>> GetAllAsync();
         Task AddAsync(Guid id, Guid creatorId, Discipline discipline, string description, int slots, double price, DateTime date, TimeSpan approximateDuration, string place);
         Task RemoveAsync(Guid id);
+        Task JoinEventAsync(Guid eventId, Guid userId);
     }
 }

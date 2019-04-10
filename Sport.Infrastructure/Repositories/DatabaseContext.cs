@@ -13,21 +13,25 @@ namespace Sport.Infrastructure.Repositories
         {
             //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Database=SportDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SportDB;Trusted_Connection=True;");
-
+            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<User>()
                 .HasMany<Event>(u => u.MyEvents)
                 .WithOne(e => e.Creator)
                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<UserEvent>().HasKey(ue => new {ue.EventId, ue.UserId});
-            modelBuilder.Entity<UserEvent>().HasOne(ue => ue.User).WithMany(u => u.EnrolledTo)
-                .HasForeignKey(ue => ue.UserId).OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<UserEvent>().HasOne(ue => ue.Event).WithMany(e => e.EnrolledUsers)
-                .HasForeignKey(ue => ue.EventId).OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Event>().HasMany(e => e.EnrolledUsers).WithOne(ue => ue.Event)
+                .HasForeignKey(ue => ue.EventId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<UserEvent>().HasOne(ue => ue.User).WithMany(u => u.EnrolledTo)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>().OwnsOne(u => u.Address);
         }
 
         public DbSet<User> Users { get; set; }

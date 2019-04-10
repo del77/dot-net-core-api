@@ -44,6 +44,7 @@ namespace Sport.Api
             services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole(RoleDto.Admin.ToString())));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(x => x.SerializerSettings.Formatting = Formatting.Indented);
+            services.AddDbContext<DatabaseContext>();
 
             //jwt
             var jwtSettingsSection = Configuration.GetSection("Jwt");

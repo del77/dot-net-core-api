@@ -25,7 +25,7 @@ namespace Sport.Services
                     SecurityAlgorithms.HmacSha256);
             var claims = new Claim[]
                     {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
                 new Claim(ClaimTypes.Role, role.ToString()),
                     };
 

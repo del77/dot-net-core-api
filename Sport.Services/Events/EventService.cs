@@ -24,7 +24,7 @@ namespace Sport.Services.Events
         public async Task<EventDto> GetAsync(Guid id)
         {
             var @event = await _eventRepository.GetAsync(id);
-            return _mapper.Map<EventDto>(@event);
+            return _mapper.Map<EventDetailsDto>(@event);
         }
 
         public async Task<IEnumerable<EventDto>> GetAllAsync()
@@ -38,15 +38,36 @@ namespace Sport.Services.Events
         {
             var user = await _userRepository.GetAsync(creatorId);
             var newEvent = new Event(id, user, discipline, description, slots, price, date, approximateDuration, place);
-            user.JoinToEvent(newEvent);
+            ////user.JoinToEvent(newEvent);
 
-            await _userRepository.UpdateAsync(user);
+            
             await _eventRepository.AddAsync(newEvent);
+            //await _userRepository.UpdateAsync(user);
+            //var user2 = await _userRepository.GetAsync(creatorId);
+            //var eventt = await _eventRepository.GetAsync(newEvent.Id);
         }
 
-        public Task RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _eventRepository.DeleteAsync(id);
+        }
+
+        public async Task JoinEventAsync(Guid eventId, Guid userId)
+        {
+            var @event = await _eventRepository.GetAsync(eventId);
+            if (@event == null)
+            {
+                throw new ArgumentException("Event with given eventId doesn't exist");
+            }
+
+            var user = await _userRepository.GetAsync(userId);
+            if (user == null)
+            {
+                throw new ArgumentException("User with given id doesn't exist");
+            }
+            @event.JoinUser(user);
+            await _eventRepository.UpdateAsync(@event);
+            //await _eventRepository.UpdateAsync(@event);
         }
     }
 }

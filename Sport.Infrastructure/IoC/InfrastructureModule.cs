@@ -8,7 +8,7 @@ namespace Sport.Infrastructure.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(typeof(InfrastructureModule).Assembly).AsImplementedInterfaces();
-            builder.RegisterType<DatabaseContext>().InstancePerLifetimeScope();
+            //builder.RegisterType<DatabaseContext>().InstancePerLifetimeScope();
         }
     }
 }

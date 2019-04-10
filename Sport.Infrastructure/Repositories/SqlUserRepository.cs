@@ -39,6 +39,7 @@ namespace Sport.Infrastructure.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var user = await GetAsync(id);
+            _context.UserEvents.RemoveRange(user.EnrolledTo);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }

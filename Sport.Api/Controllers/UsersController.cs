@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sport.Services.Dto;
@@ -43,7 +44,14 @@ namespace Sport.Api.Controllers
             return Ok(user);
         }
 
-
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var command = new DeleteUser(id);
+            await SendAsync(command);
+            return NoContent();
+        }
 
 
     }

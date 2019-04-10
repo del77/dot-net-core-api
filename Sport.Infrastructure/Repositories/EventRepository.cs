@@ -22,7 +22,7 @@ namespace Sport.Infrastructure.Repositories
 
         public async Task<IEnumerable<Event>> GetAllAsync()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Events.Include(x => x.Creator).ToListAsync();
         }
 
         public async Task AddAsync(Event @event)

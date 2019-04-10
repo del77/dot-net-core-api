@@ -17,7 +17,7 @@ namespace Sport.Services.Users.Handlers
         {
             command.Id = Guid.NewGuid();
             await _userService.RegisterAsync(command.Id, command.Username, command.Email, command.FirstName,
-                command.LastName, command.Password);
+                command.LastName, command.Password, command.UserAddress.Street, command.UserAddress.City, command.UserAddress.Country, command.UserAddress.PostalCode);
         }
     }
 }

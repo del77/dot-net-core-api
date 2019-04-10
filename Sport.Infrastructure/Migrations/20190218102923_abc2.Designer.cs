@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sport.Infrastructure.Repositories;
 
 namespace Sport.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190218102923_abc2")]
+    partial class abc2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,31 +96,6 @@ namespace Sport.Infrastructure.Migrations
                         .WithMany("MyEvents")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Sport.Core.Domain.User", b =>
-                {
-                    b.OwnsOne("Sport.Core.Domain.Address", "Address", b1 =>
-                        {
-                            b1.Property<Guid>("UserId");
-
-                            b1.Property<string>("City");
-
-                            b1.Property<string>("Country");
-
-                            b1.Property<string>("PostalCode");
-
-                            b1.Property<string>("Street");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.HasOne("Sport.Core.Domain.User")
-                                .WithOne("Address")
-                                .HasForeignKey("Sport.Core.Domain.Address", "UserId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
                 });
 
             modelBuilder.Entity("Sport.Core.Domain.UserEvent", b =>

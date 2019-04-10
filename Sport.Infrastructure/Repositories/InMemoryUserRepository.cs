@@ -10,11 +10,13 @@ namespace Sport.Infrastructure.Repositories
 {
     public class InMemoryUserRepository : IUserRepository
     {
+        static Address address = new Address("street", "city", "country", "123-12");
         private static readonly ISet<User> users = new HashSet<User>
         {
-            new User(Guid.NewGuid(), "user1", "user1@email.com", "firstName1", "lastName1"),
-            new User(Guid.NewGuid(), "user2", "user2@email.com", "firstName2", "lastName2"),
-            new User(Guid.NewGuid(), "user3", "user3@email.com", "firstName3", "lastName3"),
+            
+            new User(Guid.NewGuid(), "user1", "user1@email.com", "firstName1", "lastName1", address),
+            new User(Guid.NewGuid(), "user2", "user2@email.com", "firstName2", "lastName2", address),
+            new User(Guid.NewGuid(), "user3", "user3@email.com", "firstName3", "lastName3", address),
         };
 
         public async Task<User> GetAsync(Guid id)

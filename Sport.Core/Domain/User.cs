@@ -15,12 +15,14 @@ namespace Sport.Core.Domain
         public string Username { get; private set; }
         public string Password { get; private set; }
         public Role Role { get; private set; }
+        public virtual Address Address { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
-        public IEnumerable<Event> MyEvents => myEvents;
-        public IEnumerable<UserEvent> EnrolledTo => _enrolledTo;
+        public virtual IEnumerable<Event> MyEvents => myEvents;
+        public virtual IEnumerable<UserEvent> EnrolledTo => _enrolledTo;
 
-        public User(Guid id, string username, string email, string firstName, string lastName)
+        protected User() {}
+        public User(Guid id, string username, string email, string firstName, string lastName, Address address)
         {
             Id = id;
             Username = username.ToLowerInvariant();
@@ -28,6 +30,7 @@ namespace Sport.Core.Domain
             FirstName = firstName;
             LastName = lastName;
             Role = Role.User;
+            Address = address;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -58,13 +61,13 @@ namespace Sport.Core.Domain
         {
             @event.JoinUser(this);
             //_enrolledTo.Add(@event);
-            _enrolledTo.Add(new UserEvent
-            {
-                Event = @event,
-                EventId = @event.Id,
-                User = this,
-                UserId = Id
-            });
+            //_enrolledTo.Add(new UserEvent
+            //{
+            //    Event = @event,
+            //    EventId = @event.Id,
+            //    User = this,
+            //    UserId = Id
+            //});
         }
     }
 }
